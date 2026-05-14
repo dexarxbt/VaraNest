@@ -1,0 +1,154 @@
+type Agent = struct {
+  handle: str,
+  owner: actor_id,
+  description: str,
+  active: bool,
+  registration_block: u64,
+};
+
+type CapabilityDeclaration = struct {
+  id: u64,
+  agent: actor_id,
+  claim_text: str,
+  category: str,
+  stake: u128,
+  status: DeclarationStatus,
+  timestamp: u64,
+};
+
+type DeclarationStatus = enum {
+  Active,
+  Challenged,
+  Verified,
+  Failed,
+  Withdrawn,
+};
+
+type Verdict = enum {
+  Pending,
+  Verified,
+  Failed,
+  Expired,
+};
+
+type Trial = struct {
+  id: u64,
+  declaration: u64,
+  declarer: actor_id,
+  challenger: actor_id,
+  declarer_stake: u128,
+  challenger_stake: u128,
+  deadline: u64,
+  proof: opt str,
+  witness_votes: vec WitnessVote,
+  verdict: Verdict,
+};
+
+type WitnessVote = struct {
+  witness: actor_id,
+  verified: bool,
+  weight: u32,
+};
+
+type Credential = struct {
+  agent: actor_id,
+  category: str,
+  level: BadgeLevel,
+  trial_id: u64,
+  minted_at: u64,
+};
+
+type BadgeLevel = enum {
+  Bronze,
+  Silver,
+  Gold,
+};
+
+constructor {
+  New : ();
+};
+
+service Registry {
+  RegisterAgent : (handle: str, description: str) -> null;
+  UpdateDescription : (description: str) -> null;
+  query GetAgent : (owner: actor_id) -> opt Agent;
+  query GetAllAgents : () -> vec Agent;
+
+  events {
+    AgentRegistered: struct {
+      owner: actor_id,
+      handle: str,
+    };
+    AgentDescriptionUpdated: struct {
+      owner: actor_id
+    };
+  }
+};
+
+service Declarations {
+  DeclareCapability : (claim_text: str, category: str, stake: u128) -> u64;
+  WithdrawDeclaration : (declaration_id: u64) -> null;
+  query GetAgentDeclarations : (agent: actor_id) -> vec CapabilityDeclaration;
+  query GetAllActive : () -> vec CapabilityDeclaration;
+  query GetDeclaration : (declaration_id: u64) -> opt CapabilityDeclaration;
+
+  events {
+    CapabilityDeclared: struct {
+      id: u64,
+      agent: actor_id,
+      category: str,
+    };
+    DeclarationWithdrawn: struct {
+      id: u64
+    };
+  }
+};
+
+service Trials {
+  CastWitnessVote : (trial_id: u64, verified: bool, weight: u32) -> null;
+  IssueChallenge : (declaration_id: u64, challenger_stake: u128, duration_blocks: u64) -> u64;
+  SettleTrial : (trial_id: u64) -> Verdict;
+  SubmitProof : (trial_id: u64, proof: str) -> null;
+  query GetActiveTrial : (declaration_id: u64) -> opt Trial;
+  query GetAllTrials : () -> vec Trial;
+  query GetTrial : (trial_id: u64) -> opt Trial;
+
+  events {
+    ChallengeIssued: struct {
+      trial_id: u64,
+      declaration_id: u64,
+      challenger: actor_id,
+    };
+    ProofSubmitted: struct {
+      trial_id: u64,
+      declarer: actor_id,
+    };
+    WitnessVoted: struct {
+      trial_id: u64,
+      witness: actor_id,
+      verified: bool,
+    };
+    TrialVerdict: struct {
+      trial_id: u64,
+      verdict: Verdict,
+      rewarded: actor_id,
+    };
+  }
+};
+
+service Credentials {
+  query GetAgentCredentials : (agent: actor_id) -> vec Credential;
+  query GetCredential : (agent: actor_id, category: str) -> opt Credential;
+  query GetCredentialsByCategory : (category: str) -> vec Credential;
+  query GetVerifiedAgents : () -> vec actor_id;
+
+  events {
+    CredentialMinted: struct {
+      agent: actor_id,
+      category: str,
+      level: BadgeLevel,
+      trial_id: u64,
+    };
+  }
+};
+

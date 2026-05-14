@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  background: #050508;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  background: #050508;
+  color: #f4fbff;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  content: "";
+  background:
+    radial-gradient(circle at 20% 10%, rgba(33, 246, 255, 0.12), transparent 32%),
+    radial-gradient(circle at 82% 18%, rgba(141, 92, 255, 0.14), transparent 34%),
+    linear-gradient(180deg, #050508 0%, #090912 52%, #050508 100%);
+}
+
+body::after {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  content: "";
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, black, transparent 86%);
+}
+
+.scanlines {
+  position: relative;
+}
+
+.scanlines::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.045),
+    rgba(255, 255, 255, 0.045) 1px,
+    transparent 1px,
+    transparent 7px
+  );
+  opacity: 0.12;
+}
+
+.arena-border {
+  border: 1px solid rgba(33, 246, 255, 0.18);
+  background: linear-gradient(135deg, rgba(12, 13, 19, 0.96), rgba(8, 8, 13, 0.94));
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.96);
+    opacity: 0.72;
+  }
+  70% {
+    transform: scale(1.16);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.16);
+    opacity: 0;
+  }
+}
+
+.pulse-ring::before {
+  position: absolute;
+  inset: -6px;
+  border: 1px solid currentColor;
+  border-radius: inherit;
+  content: "";
+  animation: pulse-ring 1.8s ease-out infinite;
+}
+
