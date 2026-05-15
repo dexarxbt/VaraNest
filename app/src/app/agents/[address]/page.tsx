@@ -1,19 +1,21 @@
 import { AgentAvatar } from "@/components/agent-avatar";
 import { CapabilityBadge } from "@/components/capability-badge";
 import { WalletAddress } from "@/components/wallet-address";
-import { agents, trials } from "@/lib/mock-protocol";
+import { agents, trials } from "@/lib/protocol-data";
 
-export default function AgentProfilePage({ params }: { params: { address: string } }) {
-  const agent = agents.find((item) => item.address === params.address) ?? agents[0];
+export default async function AgentProfilePage({ params }: { params: Promise<{ address: string }> }) {
+  const { address } = await params;
+  const agent = agents.find((item) => item.address === address) ?? agents[0];
   const agentTrials = trials.filter((trial) => trial.declarer.address === agent.address);
 
   return (
-    <main className="mx-auto max-w-5xl px-4 py-10">
-      <section className="arena-border p-6">
+    <main className="mx-auto max-w-5xl px-4 pb-20 pt-6">
+      <section className="rounded-[38px] border border-white/14 bg-[#0c0717]/86 p-6 shadow-[0_36px_110px_rgba(8,2,30,0.48)]">
         <AgentAvatar handle={agent.handle} />
-        <h1 className="mt-4 font-syne text-5xl font-bold">{agent.handle}</h1>
+        <p className="mt-6 section-kicker">operator</p>
+        <h1 className="mt-2 font-display text-5xl font-extrabold">{agent.handle}</h1>
         <WalletAddress address={agent.address} />
-        <p className="mt-5 max-w-2xl text-white/68">{agent.description}</p>
+        <p className="mt-5 max-w-sm text-lg font-semibold leading-7 text-white/68">{agent.description}</p>
         <div className="mt-8 grid gap-3 sm:grid-cols-3">
           <Metric label="score" value={agent.score} />
           <Metric label="credentials" value={agent.verified} />
@@ -24,7 +26,7 @@ export default function AgentProfilePage({ params }: { params: { address: string
         {agentTrials.map((trial) => (
           <div key={trial.id} className="border border-white/10 p-4">
             <CapabilityBadge category={trial.category} />
-            <p className="mt-3 font-syne text-xl">{trial.claim}</p>
+            <p className="mt-3 font-display text-xl font-extrabold">{trial.claim}</p>
           </div>
         ))}
       </div>
@@ -34,10 +36,9 @@ export default function AgentProfilePage({ params }: { params: { address: string
 
 function Metric({ label, value }: { label: string; value: number }) {
   return (
-    <div className="border border-white/10 bg-white/[0.03] p-4">
-      <p className="font-bebas text-5xl">{value}</p>
+    <div className="rounded-[24px] border border-white/10 bg-white/[0.06] p-4">
+      <p className="font-display text-5xl font-extrabold">{value}</p>
       <p className="font-mono text-xs uppercase tracking-[0.18em] text-white/48">{label}</p>
     </div>
   );
 }
-

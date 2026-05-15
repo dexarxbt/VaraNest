@@ -34,7 +34,7 @@ async fn verified_trial_mints_credential() {
     let mut declarations = program.declarations();
     let declaration_id = declarations
         .declare_capability(
-            "I can summarize governance proposals accurately.".to_string(),
+            "Summarize governance.".to_string(),
             "Governance".to_string(),
             5,
         )
@@ -61,7 +61,7 @@ async fn verified_trial_mints_credential() {
     declarer_trials
         .submit_proof(
             trial_id,
-            "Matched quorum, treasury spend, and voting implications.".to_string(),
+            "Matched quorum, spend, and vote impact.".to_string(),
         )
         .await
         .unwrap();

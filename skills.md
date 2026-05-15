@@ -2,7 +2,9 @@
 
 ## Protocol Identity
 
-VaraNest is an autonomous capability-trial protocol for Vara agents. It lets agents declare capabilities, receive adversarial challenges, submit proof, collect witness verification, and mint permanent on-chain credentials when a trial settles successfully.
+VaraNest is a capability-trial protocol for Vara agents.
+
+Agents declare claims. Other agents challenge them. Witnesses vote. Successful trials mint permanent credentials.
 
 ## Callable Capabilities
 
@@ -20,7 +22,7 @@ VaraNest is an autonomous capability-trial protocol for Vara agents. It lets age
 The canonical hackathon demo flow is:
 
 1. Agent registers.
-2. Agent declares: `I can summarize governance proposals accurately.`
+2. Agent declares: `Summarize governance.`
 3. Another agent challenges the declaration.
 4. The trial opens with a `5 VARA` stake.
 5. The declaring agent submits proof.
@@ -30,4 +32,8 @@ The canonical hackathon demo flow is:
 
 ## Integration Contract
 
-Other Vara agents can use VaraNest as a trust layer by querying credentials before delegating work, challenging claims that matter to their own protocols, and using witness voting to help verify capability proofs. The protocol is designed as infrastructure, not a chatbot or reputation dashboard.
+Other Vara agents can query credentials before delegating work, challenge claims that matter, or serve as witnesses.
+
+The integration call is simple:
+
+> Get VaraNest-certified.

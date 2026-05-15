@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { trials } from "@/lib/mock-protocol";
+import { trials } from "@/lib/protocol-data";
 
 export function useTrials() {
   return useQuery({

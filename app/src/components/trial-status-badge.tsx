@@ -1,4 +1,4 @@
-import { TrialStatus } from "@/lib/mock-protocol";
+import { TrialStatus } from "@/lib/protocol-data";
 import { cn } from "@/lib/utils";
 
 const styles: Record<TrialStatus, string> = {

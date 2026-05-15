@@ -14,10 +14,14 @@ const config: Config = {
         failed: "#ff3d57"
       },
       fontFamily: {
-        bebas: ["var(--font-bebas)"],
-        syne: ["var(--font-syne)"],
-        mono: ["var(--font-plex-mono)"],
-        figtree: ["var(--font-figtree)"]
+        display: ["var(--font-display)"],
+        heading: ["var(--font-display)"],
+        mono: ["var(--font-mono)"],
+        body: ["var(--font-body)"],
+        accent: ["var(--font-accent)"],
+        bebas: ["var(--font-display)"],
+        syne: ["var(--font-display)"],
+        figtree: ["var(--font-body)"]
       },
       boxShadow: {
         cyan: "0 0 32px rgba(33, 246, 255, 0.28)",
@@ -30,4 +34,3 @@ const config: Config = {
 };
 
 export default config;
-
