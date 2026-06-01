@@ -3,6 +3,7 @@ import { toast } from "sonner";
 
 type WalletState = {
   address: string | null;
+  source: string | null;
   network: "mainnet" | "testnet";
   mode: "disconnected" | "injected";
   connectInjected: () => Promise<void>;
@@ -33,6 +34,7 @@ function getInjectedWeb3(): Record<string, InjectedWeb3Provider> | undefined {
 
 export const useWalletStore = create<WalletState>((set) => ({
   address: null,
+  source: null,
   network: "mainnet",
   mode: "disconnected",
   connectInjected: async () => {
@@ -45,17 +47,25 @@ export const useWalletStore = create<WalletState>((set) => ({
       return;
     }
 
-    const extension = await injectedWeb3[extensionName].enable("VaraNest");
-    const accounts = await extension.accounts.get();
-    const account = accounts[0];
+    try {
+      const extension = await injectedWeb3[extensionName].enable("VaraNest");
+      const accounts = await extension.accounts.get();
+      const account = accounts[0];
 
-    if (!account) {
-      toast.error("Wallet connected, but no account was exposed.");
-      return;
+      if (!account) {
+        toast.error("Wallet connected, but no account was exposed.");
+        return;
+      }
+
+      set({ address: account.address, source: extensionName, mode: "injected" });
+      toast.success(`Connected ${account.name ?? "wallet"}`);
+    } catch (error) {
+      if ((error as Error).message?.includes("Reject")) {
+        toast.info("Wallet connection was cancelled.");
+      } else {
+        toast.error("Failed to connect wallet. Try again.");
+      }
     }
-
-    set({ address: account.address, mode: "injected" });
-    toast.success(`Connected ${account.name ?? "wallet"}`);
   },
-  disconnect: () => set({ address: null, mode: "disconnected" })
+  disconnect: () => set({ address: null, source: null, mode: "disconnected" })
 }));

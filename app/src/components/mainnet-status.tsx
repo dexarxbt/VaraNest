@@ -76,7 +76,7 @@ export function MainnetStatus() {
 
       <div className="mt-4 grid gap-2 sm:grid-cols-3">
         <Signal label="handle" value={application?.handle ?? (isLoading ? "syncing" : "varanest")} />
-        <Signal label="status" value={application?.status ?? (isError ? "offline" : "Building")} />
+        <Signal label="status" value={application?.status ?? (isError ? "offline" : "Submitted")} />
         <Signal label="track" value={application?.track ?? "Services"} />
       </div>
 

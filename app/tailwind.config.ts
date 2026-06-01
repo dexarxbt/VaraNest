@@ -5,6 +5,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        background: "#000000",
+        primary: "#DEDBC8",
         void: "#050508",
         panel: "#0c0d13",
         cyan: "#21f6ff",
@@ -16,9 +18,10 @@ const config: Config = {
       fontFamily: {
         display: ["var(--font-display)"],
         heading: ["var(--font-display)"],
-        mono: ["var(--font-mono)"],
+        mono: ["var(--font-body)"],
         body: ["var(--font-body)"],
-        accent: ["var(--font-accent)"],
+        serif: ["var(--font-display)"],
+        accent: ["var(--font-display)"],
         bebas: ["var(--font-display)"],
         syne: ["var(--font-display)"],
         figtree: ["var(--font-body)"]

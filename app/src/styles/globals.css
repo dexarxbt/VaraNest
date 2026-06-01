@@ -1,14 +1,16 @@
+@import "./fonts.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
   color-scheme: dark;
-  background: #050508;
-  --font-display: "Space Grotesk", "Inter", "Segoe UI", Arial, sans-serif;
-  --font-body: "Manrope", "Inter", "Segoe UI", Arial, sans-serif;
-  --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-  --font-accent: Georgia, "Times New Roman", serif;
+  background: #000000;
+  --background: #000000;
+  --primary: #dedbc8;
+  --primary-text: #e1e0cc;
+  --font-display: "Instrument Serif", serif;
+  --font-body: "Inter", sans-serif;
 }
 
 * {
@@ -18,40 +20,23 @@
 html,
 body {
   min-height: 100%;
-  background: #170735;
-  color: #ffffff;
+  background: #000000;
+  color: var(--primary-text);
 }
 
 body {
   margin: 0;
   overflow-x: hidden;
   cursor: default;
+  font-family: var(--font-body);
 }
 
 body::before {
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  content: "";
-  background:
-    radial-gradient(circle at 70% 20%, rgba(206, 190, 255, 0.42), transparent 24%),
-    radial-gradient(circle at 20% 82%, rgba(231, 52, 255, 0.26), transparent 30%),
-    radial-gradient(circle at 48% 8%, rgba(36, 255, 178, 0.14), transparent 22%),
-    linear-gradient(135deg, #190742 0%, #351077 42%, #12052c 100%);
+  content: none;
 }
 
 body::after {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  content: "";
-  background-image:
-    linear-gradient(120deg, rgba(255, 255, 255, 0.1), transparent 38%),
-    radial-gradient(rgba(255, 255, 255, 0.18) 0.6px, transparent 0.6px);
-  background-size: 100% 100%, 5px 5px;
-  opacity: 0.55;
-  mask-image: linear-gradient(to bottom, black, transparent 92%);
+  content: none;
 }
 
 .scanlines {
@@ -83,13 +68,11 @@ body::after {
 }
 
 .hero-title {
-  text-shadow:
-    0 18px 54px rgba(5, 2, 18, 0.68),
-    0 0 30px rgba(255, 255, 255, 0.16);
+  text-shadow: 0 18px 54px rgba(0, 0, 0, 0.68);
 }
 
 .hero-copy {
-  text-shadow: 0 10px 30px rgba(10, 4, 34, 0.45);
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
 }
 
 .premium-glass {
@@ -116,7 +99,7 @@ body::after {
 }
 
 .section-kicker {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.22em;
@@ -141,7 +124,7 @@ body::after {
 }
 
 ::selection {
-  background: rgba(33, 246, 255, 0.28);
+  background: rgba(222, 219, 200, 0.28);
   color: #ffffff;
 }
 
@@ -193,4 +176,35 @@ a {
   content: "";
   background: linear-gradient(90deg, transparent, rgba(33, 246, 255, 0.22), transparent);
   animation: sweep 4s linear infinite;
+}
+
+.noise-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.42'/%3E%3C/svg%3E");
+}
+
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.32'/%3E%3C/svg%3E");
+}
+
+@keyframes fade-rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-rise {
+  animation: fade-rise 0.8s ease-out both;
+}
+
+.animate-fade-rise-delay {
+  animation: fade-rise 0.8s ease-out 0.2s both;
+}
+
+.animate-fade-rise-delay-2 {
+  animation: fade-rise 0.8s ease-out 0.4s both;
 }

@@ -18,7 +18,7 @@ export function ProtocolConsole() {
       <div className="mt-5 grid gap-3 sm:grid-cols-3">
         <Metric icon={<DatabaseZap />} label="program" value={`${program.id.slice(0, 8)}...${program.id.slice(-4)}`} />
         <Metric icon={<Activity />} label="block" value={program.block.toLocaleString()} />
-        <Metric icon={<ShieldCheck />} label="status" value="Building" />
+        <Metric icon={<ShieldCheck />} label="status" value="Submitted" />
       </div>
       <div className="mt-5 space-y-2">
         {liveFeed.map((line, index) => (

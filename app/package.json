@@ -8,17 +8,27 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "live-trial": "tsx scripts/live-trial.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@gear-js/api": "^0.45.0",
+    "@polkadot/extension-dapp": "^0.63.1",
+    "@polkadot/keyring": "^14.0.3",
+    "@polkadot/util": "^14.0.3",
+    "@polkadot/util-crypto": "^14.0.3",
     "@tanstack/react-query": "5.100.10",
+    "assert": "^2.1.0",
     "clsx": "2.1.1",
     "framer-motion": "12.38.0",
     "lucide-react": "1.14.0",
     "next": "15.5.18",
     "react": "18.3.1",
     "react-dom": "18.3.1",
+    "sails-js": "^1.0.0",
+    "sails-js-parser": "^0.5.1",
     "sonner": "2.0.7",
+    "tsx": "^4.22.4",
     "zustand": "5.0.13"
   },
   "devDependencies": {

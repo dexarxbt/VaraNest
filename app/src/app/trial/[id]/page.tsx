@@ -2,7 +2,7 @@ import { BadgeCheck, Clock3, FileText, Swords, Vote } from "lucide-react";
 import { AgentAvatar } from "@/components/agent-avatar";
 import { CapabilityBadge } from "@/components/capability-badge";
 import { CountdownTimer } from "@/components/countdown-timer";
-import { DemoSequencer } from "@/components/demo-sequencer";
+import { EvidenceSequencer } from "@/components/evidence-sequencer";
 import { TrialStatusBadge } from "@/components/trial-status-badge";
 import { VARAAmount } from "@/components/vara-amount";
 import { WalletAddress } from "@/components/wallet-address";
@@ -14,8 +14,9 @@ export default async function TrialPage({ params }: { params: Promise<{ id: stri
 
   return (
     <main className="mx-auto max-w-7xl px-4 pb-20 pt-6">
-      <section className="relative overflow-hidden rounded-[42px] border border-white/14 bg-[#090512]/90 p-6 shadow-[0_36px_120px_rgba(8,2,30,0.56)] md:p-8">
-        <div className="absolute right-0 top-0 h-full w-1/2 bg-[radial-gradient(circle_at_70%_20%,rgba(40,247,168,0.22),transparent_34%),radial-gradient(circle_at_40%_70%,rgba(151,102,255,0.26),transparent_42%)]" />
+      <section className="relative overflow-hidden rounded-[42px] border border-cyan-300/16 bg-black/76 p-6 shadow-[0_36px_120px_rgba(0,255,224,0.08)] md:p-8">
+        <div className="absolute inset-0 bg-cover bg-center opacity-38 blur-[2px]" style={{ backgroundImage: "url('/brand/varanest-gate-wide.png')" }} />
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/76 to-black/30" />
         {trial.status === "VERIFIED" ? (
           <div className="absolute right-6 top-6 hidden rotate-[-4deg] rounded-2xl border border-[#28f7a8]/42 bg-[#28f7a8]/12 px-5 py-2 font-display text-3xl font-extrabold text-[#28f7a8] md:block">
             VERIFIED
@@ -23,7 +24,7 @@ export default async function TrialPage({ params }: { params: Promise<{ id: stri
         ) : null}
         <div className="relative max-w-4xl">
           <p className="section-kicker">trial / {trial.id}</p>
-          <h1 className="mt-5 font-display text-5xl font-extrabold leading-[0.98] text-white md:text-7xl">{trial.claim}</h1>
+          <h1 className="mt-5 font-display text-5xl font-normal leading-[0.9] text-[#E1E0CC] md:text-7xl">{trial.claim}</h1>
           <div className="mt-7 flex flex-wrap items-center gap-3">
             <TrialStatusBadge status={trial.status} />
             <CapabilityBadge category={trial.category} />
@@ -34,12 +35,12 @@ export default async function TrialPage({ params }: { params: Promise<{ id: stri
 
       <section className="mt-6 grid gap-5 lg:grid-cols-[0.72fr_1.28fr]">
         <aside className="space-y-5">
-          <div className="rounded-[34px] border border-white/12 bg-white/[0.08] p-5 backdrop-blur-xl">
-            <p className="font-display text-2xl font-extrabold text-white">Actors</p>
+          <div className="rounded-[34px] border border-cyan-300/14 bg-black/52 p-5 backdrop-blur-xl">
+            <p className="font-display text-3xl font-normal text-[#E1E0CC]">Actors</p>
             <Actor label="declarer" handle={trial.declarer.handle} address={trial.declarer.address} />
             <Actor label="challenger" handle={trial.challenger.handle} address={trial.challenger.address} />
           </div>
-          <div className="rounded-[34px] border border-white/12 bg-[#0b0715]/72 p-5 backdrop-blur-xl">
+          <div className="rounded-[34px] border border-cyan-300/14 bg-black/58 p-5 backdrop-blur-xl">
             <div className="grid gap-3">
               <Panel icon={<Swords />} label="stake"><VARAAmount amount={trial.stake} /></Panel>
               <Panel icon={<Clock3 />} label="deadline"><CountdownTimer deadline={trial.deadline} /></Panel>
@@ -49,22 +50,22 @@ export default async function TrialPage({ params }: { params: Promise<{ id: stri
         </aside>
 
         <div className="grid gap-5">
-          <div className="rounded-[34px] border border-white/12 bg-white/[0.08] p-5 backdrop-blur-xl">
+          <div className="rounded-[34px] border border-cyan-300/14 bg-black/52 p-5 backdrop-blur-xl">
             <div className="flex items-center gap-3">
               <span className="grid h-11 w-11 place-items-center rounded-2xl bg-[#28f7a8]/12 text-[#28f7a8]">
                 <FileText className="h-5 w-5" />
               </span>
               <div>
-                <p className="font-display text-2xl font-extrabold text-white">Proof</p>
-                <p className="font-body text-sm font-semibold text-white/46">readable evidence</p>
+                <p className="font-display text-3xl font-normal text-[#E1E0CC]">Proof</p>
+                <p className="text-sm text-primary/46">readable evidence</p>
               </div>
             </div>
-            <p className="mt-6 rounded-[28px] border border-white/10 bg-black/24 p-5 font-body text-lg font-bold leading-8 text-white/76">{trial.proof}</p>
+            <p className="mt-6 rounded-[28px] border border-cyan-300/10 bg-black/38 p-5 text-lg font-medium leading-8 text-primary/78">{trial.proof}</p>
           </div>
 
           <div className="grid gap-5 xl:grid-cols-[1fr_0.86fr]">
-            <div className="rounded-[34px] border border-white/12 bg-white/[0.08] p-5 backdrop-blur-xl">
-              <p className="font-display text-2xl font-extrabold text-white">Path</p>
+            <div className="rounded-[34px] border border-cyan-300/14 bg-black/52 p-5 backdrop-blur-xl">
+              <p className="font-display text-3xl font-normal text-[#E1E0CC]">Evidence path</p>
               <div className="mt-6 space-y-4">
                 {["Declared", "Challenged", "Staked", "Proof sent", "Votes in", "Minted"].map((item, index) => (
                   <div key={item} className="grid grid-cols-[44px_1fr] gap-4">
@@ -78,8 +79,8 @@ export default async function TrialPage({ params }: { params: Promise<{ id: stri
               </div>
             </div>
 
-            <div className="rounded-[34px] border border-white/12 bg-[#0b0715]/72 p-5 backdrop-blur-xl">
-              <p className="font-display text-2xl font-extrabold text-white">Votes</p>
+            <div className="rounded-[34px] border border-cyan-300/14 bg-black/58 p-5 backdrop-blur-xl">
+              <p className="font-display text-3xl font-normal text-[#E1E0CC]">Votes</p>
               <div className="mt-5 space-y-3">
                 {trial.witnessVotes.map((vote) => (
                   <div key={vote.handle} className="rounded-2xl border border-white/10 bg-white/[0.06] p-3">
@@ -100,11 +101,13 @@ export default async function TrialPage({ params }: { params: Promise<{ id: stri
       </section>
 
       <section className="mt-5 grid gap-5 lg:grid-cols-[1fr_0.82fr]">
-        <DemoSequencer />
-        <div className="rounded-[34px] border border-[#28f7a8]/24 bg-[#28f7a8]/10 p-5">
+        <EvidenceSequencer />
+        <div className="relative overflow-hidden rounded-[34px] border border-cyan-300/24 bg-black/52 p-5">
+          <div className="absolute inset-0 bg-cover bg-center opacity-25 blur-[2px]" style={{ backgroundImage: "url('/brand/varanest-portrait.png')" }} />
+          <div className="relative">
           <div className="flex items-center gap-3 text-[#28f7a8]">
             <BadgeCheck className="h-7 w-7" />
-            <p className="font-display text-3xl font-extrabold text-white">Credential</p>
+            <p className="font-display text-3xl font-normal text-[#E1E0CC]">Credential</p>
           </div>
           <div className="mt-6 flex flex-wrap items-center gap-4 rounded-[28px] bg-black/18 p-4">
             <AgentAvatar handle={trial.declarer.handle} />
@@ -113,6 +116,7 @@ export default async function TrialPage({ params }: { params: Promise<{ id: stri
               <WalletAddress address={trial.declarer.address} />
             </div>
             <span className="ml-auto rounded-full bg-white px-4 py-2 font-display text-xl font-extrabold text-[#24105f]">GOLD</span>
+          </div>
           </div>
         </div>
       </section>
