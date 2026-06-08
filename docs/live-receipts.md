@@ -37,11 +37,17 @@ Diagnostic query after the failed route:
 | Current block | `33651761` |
 | Wallet free balance | `1098114061400` |
 | Estimated declaration fee | `151254176700` |
+| Minimum observed declaration fee | `151243025600` for claim `ok`, category `P`, stake `0` |
 | Declaration gas min limit | `1086393698` |
 | Voucher IDs found | `0x2376e37ced4d4da2b56fca7e3915adf1d144da59f4f8765a86803a9ded8dc867`, `0x7f1554d0612bca328cab5d00fe43dac31ff26ffa120197138296186c49e85003`, `0xbb9569d10c69e415eb61f8ba41bfbf810f06a93c1989610c58dff6f6d8631255` |
 | Voucher expiries | `32977680`, `32977115`, `33077228` |
 
-The wallet had expired vouchers at the current block height and not enough spendable balance above keep-alive requirements for the heavier declaration route. The CLI now supports `VARANEST_VOUCHER_ID` and `--voucher-id` so the daily Gear voucher can be used for heavier protocol routes.
+The wallet had expired vouchers at the current block height and not enough spendable balance above keep-alive requirements for the heavier declaration route. Even the shortest valid declaration estimated above the wallet's spendable headroom. The CLI now supports `VARANEST_VOUCHER_ID` and `--voucher-id` so the daily Gear voucher can be used for heavier protocol routes.
+
+To complete the 10/10 protocol receipt, either:
+
+- provide a fresh Gear voucher ID for this wallet, or
+- top up the wallet enough to cover at least `151243025600` planck plus keep-alive safety margin. A practical top-up target is at least `0.1 VARA` above the current balance.
 
 ```bash
 cd app
